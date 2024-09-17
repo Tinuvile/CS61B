@@ -58,6 +58,7 @@ public class Planet {
         return force * (dy / distance);
     }
 
+
     // 计算施加在当前行星上的净 X 力
     public double calcNetForceExertedByX(Planet[] allPlanets) {
         double netForceX = 0.0;
@@ -100,5 +101,9 @@ public class Planet {
 
         xxPos += dt * xxVel;
         yyPos += dt * yyVel;
+    }
+
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
     }
 }
