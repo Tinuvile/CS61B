@@ -6,7 +6,7 @@ public class ArrayDeque<T> {
     private int front; // 记录队列前端位置
     private int rear;  // 记录队列后端位置
     //此处按照课程所讲应是乘RFACTOR=2，但检查过不去，故在此处改为加10位
-    private static int RFACTOR = 10;
+    private static int RFACTOR = 2;
 
     public ArrayDeque() {
         capacity = 8;
