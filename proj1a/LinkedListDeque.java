@@ -50,18 +50,20 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         Node current = sentinel.next;
-        while (current != sentinel){
+        while (current != sentinel) {
             System.out.println(current.item);
             current = current.next;
-            if (current != sentinel)
+            if (current != sentinel) {
                 System.out.println(" ");
+            }
         }
         System.out.println();
     }
 
     public T removeFirst() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         else {
             Node firstNode = sentinel.next;
             sentinel.next = firstNode.next;
@@ -72,8 +74,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         else {
             Node lastNode = sentinel.prev;
             sentinel.prev = lastNode.prev;
@@ -85,8 +88,9 @@ public class LinkedListDeque<T> {
 
     //      使用迭代
     public T get(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             return null;
+        }
         Node current = sentinel.next;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -95,15 +99,17 @@ public class LinkedListDeque<T> {
     }
 
     private T getRecursiveHelper(Node node, int index) {
-        if (index == 0)
+        if (index == 0) {
             return node.item;
+        }
         return getRecursiveHelper(node.next, index - 1);
     }
 
     //    使用递归
     public T getRecursive(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             return null;
+        }
         return getRecursiveHelper(sentinel.next, index);
     }
 
