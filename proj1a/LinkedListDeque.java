@@ -26,8 +26,9 @@ public class LinkedListDeque<T> {
         Node addFirst = new Node(item);
         addFirst.prev = sentinel;
         addFirst.next = sentinel.next;
-        sentinel.next = addFirst;
         sentinel.next.prev = addFirst;
+        sentinel.next = addFirst;
+
         size++;
     }
 
@@ -35,8 +36,9 @@ public class LinkedListDeque<T> {
         Node addLast = new Node(item);
         addLast.prev = sentinel.prev;
         addLast.next = sentinel;
-        sentinel.prev = addLast;
         sentinel.prev.next = addLast;
+        sentinel.prev = addLast;
+
         size++;
     }
 
@@ -61,27 +63,25 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
-        } else {
-            Node firstNode = sentinel.next;
-            sentinel.next = firstNode.next;
-            firstNode.next.prev = sentinel;
-            size--;
-            return firstNode.item;
         }
+        Node firstNode = sentinel.next;
+        sentinel.next = firstNode.next;
+        sentinel.next.prev = sentinel;
+        size--;
+        return firstNode.item;
     }
 
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
-        } else {
-            Node lastNode = sentinel.prev;
-            sentinel.prev = lastNode.prev;
-            lastNode.prev.next = sentinel;
-            size--;
-            return lastNode.item;
         }
+        Node lastNode = sentinel.prev;
+        sentinel.prev = lastNode.prev;
+        sentinel.prev.next = sentinel;
+        size--;
+        return lastNode.item;
     }
 
     //      使用迭代
@@ -111,4 +111,11 @@ public class LinkedListDeque<T> {
         return getRecursiveHelper(sentinel.next, index);
     }
 
+    public static void main(String[] args) {
+        LinkedListDeque<Integer> LinkedListDeque = new LinkedListDeque<>();
+        LinkedListDeque.addFirst(1);
+        LinkedListDeque.addLast(2);
+        LinkedListDeque.addLast(3);
+        System.out.println(LinkedListDeque.getRecursive(2));
+    }
 }
