@@ -110,12 +110,5 @@ public class LinkedListDeque<T> {
         }
         return getRecursiveHelper(sentinel.next, index);
     }
-
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> LinkedListDeque = new LinkedListDeque<>();
-        LinkedListDeque.addFirst(1);
-        LinkedListDeque.addLast(2);
-        LinkedListDeque.addLast(3);
-        System.out.println(LinkedListDeque.getRecursive(2));
-    }
+    
 }
