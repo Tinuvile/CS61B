@@ -5,7 +5,7 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -82,7 +82,16 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B; // 如果A为空，直接返回B
+        }
+
+        IntList current = A;
+        while (current.rest != null) {
+            current = current.rest; // 遍历到A的最后一个元素
+        }
+        current.rest = B; // 将A的最后一个元素的rest指向B
+        return A; // 返回被修改后的列表
     }
 
     /**
@@ -91,22 +100,53 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return copyList(B); // 如果A为空，返回B的复制
+        }
+        if (B == null) {
+            return copyList(A); // 如果B为空，返回A的复制
+        }
+
+        // 创建一个新的列表，以A的第一个元素开始
+        IntList newList = new IntList(A.first, null);
+        IntList current = newList;
+
+        // 复制A的其余部分到新的列表
+        IntList ptrA = A.rest;
+        while (ptrA != null) {
+            current.rest = new IntList(ptrA.first, null);
+            ptrA = ptrA.rest;
+            current = current.rest;
+        }
+
+        // 现在将B的复制附加到新的列表
+        IntList ptrB = B;
+        while (ptrB != null) {
+            current.rest = new IntList(ptrB.first, null);
+            ptrB = ptrB.rest;
+            current = current.rest;
+        }
+
+        return newList; // 返回新创建的列表
     }
 
+    private static IntList copyList(IntList L) {
+        if (L == null) {
+            return null;
+        }
 
+        IntList newList = new IntList(L.first, null);
+        IntList current = newList;
+        L = L.rest;
 
+        while (L != null) {
+            current.rest = new IntList(L.first, null);
+            L = L.rest;
+            current = current.rest;
+        }
 
-
-
-
-
-
-
-
-
-
-
+        return newList;
+    }
 
 
     /**
