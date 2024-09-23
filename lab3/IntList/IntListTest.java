@@ -73,16 +73,21 @@ public class IntListTest {
 
     @Test
     public void testReverse() {
+        // 测试正常的多个元素的链表
         IntList L1 = IntList.of(1, 2, 3);
         IntList reversedL1 = IntList.reverse(L1);
+
+        // 反转后的结果应该是 3 -> 2 -> 1
         assertEquals(IntList.of(3, 2, 1), reversedL1); // 验证反转结果
         assertEquals(IntList.of(3, 2, 1), L1); // L1 应该被修改为反转后的结果
 
+        // 测试单元素的链表
         IntList L2 = IntList.of(4);
         IntList reversedL2 = IntList.reverse(L2);
         assertEquals(IntList.of(4), reversedL2); // 单元素列表反转应保持不变
         assertEquals(IntList.of(4), L2); // L2 应该保持不变
 
+        // 测试空列表
         IntList L3 = IntList.of(); // 空列表
         IntList reversedL3 = IntList.reverse(L3);
         assertEquals(IntList.of(), reversedL3); // 空列表反转应仍为空
