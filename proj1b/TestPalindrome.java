@@ -30,7 +30,7 @@ public class TestPalindrome {
 
     @Test
     public void testIsPalindrome() {
-        Palindrome palindrome = new Palindrome();
+        Palindrome p = new Palindrome();
         CharacterComparator obo = new OffByOne();
         CharacterComparator ob5 = new OffByN(5);
 
