@@ -27,4 +27,17 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("aaaaab"));
         assertFalse(palindrome.isPalindrome("abcbA"));
     }
+
+    @Test
+    public void testIsPalindrome() {
+        Palindrome palindrome = new Palindrome();
+        CharacterComparator obo = new OffByOne();
+        CharacterComparator ob5 = new OffByN(5);
+
+        assertFalse(palindrome.isPalindrome("aba", obo)); // 使用 OffByOne 进行检查
+        assertTrue(palindrome.isPalindrome("abcba", obo)); // 使用 OffByOne 进行检查
+        assertFalse(palindrome.isPalindrome("noon", obo)); // 不应该是 true
+        assertTrue(palindrome.isPalindrome("detrude", obo)); // 应该是 true
+        assertTrue(palindrome.isPalindrome("bibi", ob5)); // 使用 OffByN 进行检查
+    }
 }
