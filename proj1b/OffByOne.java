@@ -4,7 +4,7 @@ public class OffByOne implements CharacterComparator {
         return Math.abs(x - y) == 1;
     }
 
-    public boolean isPalindrome(String word) {
+    private boolean isPalindrome(String word) {
         int left = 0;
         int right = word.length() - 1;
         while (left < right) {
@@ -17,11 +17,11 @@ public class OffByOne implements CharacterComparator {
         return true;
     }
 
-    public boolean isPalindrome(char[] word) {
+    private boolean isPalindrome(char[] word) {
         int left = 0;
         int right = word.length - 1;
-        while(left < right){
-            if (!equalChars(word[left],word[right])){
+        while (left < right) {
+            if (!equalChars(word[left], word[right])) {
                 return false;
             }
             left++;
@@ -30,7 +30,7 @@ public class OffByOne implements CharacterComparator {
         return true;
     }
 
-    public boolean isPalindrome(String word, CharacterComparator cc) {
+    private boolean isPalindrome(String word, CharacterComparator cc) {
         int left = 0;
         int right = word.length() - 1;
         while (left < right) {

@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-public class LinkedListDeque<T> extends LinkedList<T> implements Deque<T>{
+public class LinkedListDeque<T> extends LinkedList<T> implements Deque<T> {
     //    创建链表的节点单元
     private class Node {
         T item;       //链表中的元素

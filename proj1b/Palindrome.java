@@ -13,10 +13,10 @@ public class Palindrome {
     public boolean isPalindrome(String word) {
         Deque<Character> deque = wordToDeque(word);
 
-        while(deque.size()>1){
+        while (deque.size() > 1) {
             char first = deque.removeFirst();
             char last = deque.removeLast();
-            if (first != last){
+            if (first != last) {
                 return false;
             }
         }
