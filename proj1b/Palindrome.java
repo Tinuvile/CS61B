@@ -29,8 +29,9 @@ public class Palindrome {
      * according to the given CharacterComparator
      */
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        if (word == null || word.length() <= 1)
+        if (word == null || word.length() <= 1) {
             return true;
+        }
         int left = 0;
         int right = word.length() - 1;
         while (left < right) {

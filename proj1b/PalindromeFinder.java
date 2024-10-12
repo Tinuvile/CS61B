@@ -1,4 +1,6 @@
-/** This class outputs all palindromes in the words file in the current directory. */
+/**
+ * This class outputs all palindromes in the words file in the current directory.
+ */
 public class PalindromeFinder {
 
     public static void main(String[] args) {
@@ -17,7 +19,7 @@ public class PalindromeFinder {
 */
         while (!in.isEmpty()) {
             String word = in.readString();
-            if (word.length() >= minLength && palindrome.isPalindrome(word,ccN)) {
+            if (word.length() >= minLength && palindrome.isPalindrome(word, ccN)) {
                 System.out.println(word);
             }
         }
