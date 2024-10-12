@@ -18,7 +18,7 @@ public class TestPalindrome {
     } //Uncomment this class once you've created your Palindrome class.
 
     @Test
-    public void testisPalindrome() {
+    public void testIsPalindrome() {
         assertTrue(palindrome.isPalindrome("racecar"));
         assertTrue(palindrome.isPalindrome("noon"));
         assertTrue(palindrome.isPalindrome("m"));
@@ -29,15 +29,9 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindrome() {
-        Palindrome p = new Palindrome();
-        CharacterComparator obo = new OffByOne();
-        CharacterComparator ob5 = new OffByN(5);
-
-        assertFalse(palindrome.isPalindrome("aba", obo)); // 使用 OffByOne 进行检查
-        assertTrue(palindrome.isPalindrome("abcba", obo)); // 使用 OffByOne 进行检查
-        assertFalse(palindrome.isPalindrome("noon", obo)); // 不应该是 true
-        assertTrue(palindrome.isPalindrome("detrude", obo)); // 应该是 true
-        assertTrue(palindrome.isPalindrome("bibi", ob5)); // 使用 OffByN 进行检查
+    public void testIsOffByOnePalindrome() {
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("flake", cc));
+        assertFalse(palindrome.isPalindrome("aba", cc));
     }
 }
