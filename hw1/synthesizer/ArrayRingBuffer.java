@@ -6,6 +6,8 @@ import synthesizer.AbstractBoundedQueue;
 
 import java.util.Iterator;
 
+import java.util.NoSuchElementException;
+
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
@@ -69,6 +71,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /**
      * Return oldest item, but don't remove it.
      */
+    @Override
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
         if (isEmpty()) {
@@ -78,4 +81,29 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     // TODO: When you get to part 5, implement the needed code to support iteration.
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayRingBufferIterator();
+    }
+
+    private class ArrayRingBufferIterator implements Iterator<T> {
+        private int currentIndex = first;
+        private int itemsReturned = 0;
+
+        @Override
+        public boolean hasNext() {
+            return itemsReturned < fillCount;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            T item = rb[currentIndex];
+            currentIndex = (currentIndex + 1) % capacity;
+            itemsReturned++;
+            return item;
+        }
+    }
 }
