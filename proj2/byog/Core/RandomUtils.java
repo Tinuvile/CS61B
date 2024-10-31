@@ -10,7 +10,11 @@ import java.util.Random;
  * modify this file.
  * <p>
  * Adapted from https://introcs.cs.princeton.edu/java/22library/StdRandom.java.html
-*
+ *
+ * 一个静态方法库，用于生成来自不同分布的伪随机数（伯努利分布、均匀分布、高斯分布、离散分布和指数分布）。
+ * 还包括用于洗牌数组和其他与随机性相关的操作的方法。欢迎随意修改此文件。
+ * <p>
+ * 摘自 https://introcs.cs.princeton.edu/java/22library/StdRandom.java.html
  */
 public class RandomUtils {
 
@@ -18,6 +22,10 @@ public class RandomUtils {
      * Returns a random real number uniformly in [0, 1).
      *
      * @return a random real number uniformly in [0, 1)
+     *
+     * 返回一个在 [0, 1) 区间内均匀随机的实数。
+     *
+     * 在 [0, 1) 区间内均匀随机的实数
      */
     public static double uniform(Random random) {
         return random.nextDouble();
@@ -29,6 +37,10 @@ public class RandomUtils {
      * @param n number of possible integers
      * @return a random integer uniformly between 0 (inclusive) and {@code n} (exclusive)
      * @throws IllegalArgumentException if {@code n <= 0}
+     * 返回一个在 [0, n) 区间内均匀随机的整数。
+     * n 可选择的整数数量
+     * 在 0（包含）和 {@code n}（不包含）之间均匀随机的整数
+     * IllegalArgumentException 如果 {@code n <= 0}
      */
     public static int uniform(Random random, int n) {
         if (n <= 0) {
@@ -44,6 +56,10 @@ public class RandomUtils {
      * @param n number of possible {@code long} integers
      * @return a random long integer uniformly between 0 (inclusive) and {@code n} (exclusive)
      * @throws IllegalArgumentException if {@code n <= 0}
+     * 返回一个在 [0, n) 区间内均匀随机的长整数。
+     * n 可选择的 {@code long} 整数数量
+     * 在 0（包含）和 {@code n}（不包含）之间均匀随机的长整数
+     * IllegalArgumentException 如果 {@code n <= 0}
      */
     public static long uniform(Random random, long n) {
         if (n <= 0L) {
@@ -81,6 +97,12 @@ public class RandomUtils {
      * @return a random integer uniformly in [a, b)
      * @throws IllegalArgumentException if {@code b <= a}
      * @throws IllegalArgumentException if {@code b - a >= Integer.MAX_VALUE}
+     * 返回一个在 [a, b) 区间内均匀随机的整数。
+     * a 左端点
+     * b 右端点
+     * 在 [a, b) 区间内均匀随机的整数
+     * IllegalArgumentException 如果 {@code b <= a}
+     * IllegalArgumentException 如果 {@code b - a >= Integer.MAX_VALUE}
      */
     public static int uniform(Random random, int a, int b) {
         if ((b <= a) || ((long) b - a >= Integer.MAX_VALUE)) {
@@ -96,6 +118,11 @@ public class RandomUtils {
      * @param b the right endpoint
      * @return a random real number uniformly in [a, b)
      * @throws IllegalArgumentException unless {@code a < b}
+     * 返回一个在 [a, b) 区间内均匀随机的实数。
+     * a 左端点
+     * b 右端点
+     * 在 [a, b) 区间内均匀随机的实数
+     * IllegalArgumentException 除非 {@code a < b}
      */
     public static double uniform(Random random, double a, double b) {
         if (!(a < b)) {
@@ -112,6 +139,10 @@ public class RandomUtils {
      * @return {@code true} with probability {@code p} and
      * {@code false} with probability {@code p}
      * @throws IllegalArgumentException unless {@code 0} &le; {@code p} &le; {@code 1.0}
+     * 从伯努利分布中返回一个随机布尔值，成功概率为 <em>p</em>。
+     * p 返回 {@code true} 的概率
+     * {@code true} 的概率为 {@code p}，{@code false} 的概率为 {@code 1-p}
+     * IllegalArgumentException 除非 {@code 0} &le; {@code p} &le; {@code 1.0}
      */
     public static boolean bernoulli(Random random, double p) {
         if (!(p >= 0.0 && p <= 1.0)) {
@@ -126,6 +157,8 @@ public class RandomUtils {
      *
      * @return {@code true} with probability 1/2 and
      * {@code false} with probability 1/2
+     * 从伯努利分布中返回一个随机布尔值，成功概率为 1/2。
+     * {@code true} 的概率为 1/2，{@code false} 的概率为 1/2
      */
     public static boolean bernoulli(Random random) {
         return bernoulli(random, 0.5);
@@ -136,6 +169,8 @@ public class RandomUtils {
      *
      * @return a random real number from a standard Gaussian distribution
      * (mean 0 and standard deviation 1).
+     * 返回一个来自标准高斯分布的随机实数。
+     * 来自标准高斯分布的随机实数（均值为 0，标准差为 1）。
      */
     public static double gaussian(Random random) {
         // use the polar form of the Box-Muller transform
@@ -159,6 +194,10 @@ public class RandomUtils {
      * @param sigma the standard deviation
      * @return a real number distributed according to the Gaussian distribution
      * with mean {@code mu} and standard deviation {@code sigma}
+     * 返回一个来自均值为 &mu; 和标准差为 &sigma; 的高斯分布的随机实数。
+     * mu    均值
+     * sigma 标准差
+     * 按照均值为 {@code mu} 和标准差为 {@code sigma} 的高斯分布分布的实数
      */
     public static double gaussian(Random random, double mu, double sigma) {
         return mu + sigma * gaussian(random);
@@ -173,6 +212,10 @@ public class RandomUtils {
      * probability {@code p}; or {@code Integer.MAX_VALUE} if
      * {@code p} is (nearly) equal to {@code 1.0}.
      * @throws IllegalArgumentException unless {@code p >= 0.0} and {@code p <= 1.0}
+     * 从成功概率为 <em>p</em> 的几何分布中返回一个随机整数。
+     * p 几何分布的参数
+     * 从成功概率为 {@code p} 的几何分布中返回的随机整数；如果 {@code p} 几乎等于 {@code 1.0}，则返回 {@code Integer.MAX_VALUE}。
+     * IllegalArgumentException 除非 {@code p >= 0.0} 和 {@code p <= 1.0}
      */
     public static int geometric(Random random, double p) {
         if (!(p >= 0.0 && p <= 1.0)) {
@@ -188,6 +231,10 @@ public class RandomUtils {
      * @param lambda the mean of the Poisson distribution
      * @return a random integer from a Poisson distribution with mean {@code lambda}
      * @throws IllegalArgumentException unless {@code lambda > 0.0} and not infinite
+     * 从均值为 &lambda; 的泊松分布中返回一个随机整数。
+     * lambda 泊松分布的均值
+     * 从均值为 {@code lambda} 的泊松分布中返回的随机整数
+     * IllegalArgumentException 除非 {@code lambda > 0.0} 且不是无限的
      */
     public static int poisson(Random random, double lambda) {
         if (!(lambda > 0.0)) {
@@ -212,6 +259,8 @@ public class RandomUtils {
      * Returns a random real number from the standard Pareto distribution.
      *
      * @return a random real number from the standard Pareto distribution
+     * 返回一个来自标准帕累托分布的随机实数。
+     * 来自标准帕累托分布的随机实数
      */
     public static double pareto(Random random) {
         return pareto(random, 1.0);
@@ -225,6 +274,10 @@ public class RandomUtils {
      * @return a random real number from a Pareto distribution with shape
      * parameter {@code alpha}
      * @throws IllegalArgumentException unless {@code alpha > 0.0}
+     * 返回一个来自形状参数 &alpha; 的帕累托分布的随机实数。
+     * alpha 形状参数
+     * 来自形状参数为 {@code alpha} 的帕累托分布的随机实数
+     * IllegalArgumentException 除非 {@code alpha > 0.0}
      */
     public static double pareto(Random random, double alpha) {
         if (!(alpha > 0.0)) {
@@ -237,6 +290,8 @@ public class RandomUtils {
      * Returns a random real number from the Cauchy distribution.
      *
      * @return a random real number from the Cauchy distribution.
+     * 返回一个来自柯西分布的随机实数。
+     * 来自柯西分布的随机实数。
      */
     public static double cauchy(Random random) {
         return Math.tan(Math.PI * (uniform(random) - 0.5));
@@ -251,6 +306,12 @@ public class RandomUtils {
      * @throws IllegalArgumentException if {@code probabilities} is {@code null}
      * @throws IllegalArgumentException if sum of array entries is not (very nearly) equal to 1.0
      * @throws IllegalArgumentException unless {@code probabilities[i] >= 0.0} for each index i
+     * 从指定的离散分布中返回一个随机整数。
+     * probabilities 每个整数发生的概率
+     * 从离散分布中随机选择的整数: {@code i} 的概率为 {@code probabilities[i]}
+     * IllegalArgumentException 如果 {@code probabilities} 为 {@code null}
+     * IllegalArgumentException 如果数组条目的总和不（非常接近）等于 1.0
+     * IllegalArgumentException 除非 {@code probabilities[i] >= 0.0} 对于每个索引 i
      */
     public static int discrete(Random random, double[] probabilities) {
         if (probabilities == null) {
@@ -294,6 +355,13 @@ public class RandomUtils {
      * @throws IllegalArgumentException if all array entries are 0
      * @throws IllegalArgumentException if frequencies[i] is negative for any index i
      * @throws IllegalArgumentException if sum of frequencies exceeds Integer.MAX_VALUE (2^31 - 1)
+     * 从指定的离散分布中返回一个随机整数。
+     * frequencies 每个整数发生的频率
+     * 从离散分布中随机选择的整数: i 的概率与 frequencies[i] 成正比
+     * IllegalArgumentException 如果 frequencies 为 {@code null}
+     * IllegalArgumentException 如果所有数组条目都为 0
+     * IllegalArgumentException 如果 frequencies[i] 对于任何索引 i 为负
+     * IllegalArgumentException 如果频率的总和超过 Integer.MAX_VALUE (2^31 - 1)
      */
     public static int discrete(Random random, int[] frequencies) {
         if (frequencies == null) {
@@ -337,6 +405,10 @@ public class RandomUtils {
      * @return a random real number from an exponential distribution with
      * rate {@code lambda}
      * @throws IllegalArgumentException unless {@code lambda > 0.0}
+     * 返回来自速率 &lambda; 的指数分布的随机实数。
+     * lambda 指数分布的速率
+     * 来自速率为 {@code lambda} 的指数分布的随机实数
+     * IllegalArgumentException 除非 {@code lambda > 0.0}
      */
     public static double exp(Random random, double lambda) {
         if (!(lambda > 0.0)) {
@@ -350,6 +422,9 @@ public class RandomUtils {
      *
      * @param a the array to shuffle
      * @throws IllegalArgumentException if {@code a} is {@code null}
+     * 以均匀随机顺序重新排列指定数组的元素。
+     * a 要打乱的数组
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
      */
     public static void shuffle(Random random, Object[] a) {
         validateNotNull(a);
@@ -367,6 +442,9 @@ public class RandomUtils {
      *
      * @param a the array to shuffle
      * @throws IllegalArgumentException if {@code a} is {@code null}
+     * 以均匀随机顺序重新排列指定数组的元素。
+     * a 要打乱的数组
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
      */
     public static void shuffle(Random random, double[] a) {
         validateNotNull(a);
@@ -384,6 +462,9 @@ public class RandomUtils {
      *
      * @param a the array to shuffle
      * @throws IllegalArgumentException if {@code a} is {@code null}
+     * 以均匀随机顺序重新排列指定数组的元素。
+     * a 要打乱的数组
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
      */
     public static void shuffle(Random random, int[] a) {
         validateNotNull(a);
@@ -401,6 +482,9 @@ public class RandomUtils {
      *
      * @param a the array to shuffle
      * @throws IllegalArgumentException if {@code a} is {@code null}
+     * 以均匀随机顺序重新排列指定数组的元素。
+     * a 要打乱的数组
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
      */
     public static void shuffle(Random random, char[] a) {
         validateNotNull(a);
@@ -421,6 +505,12 @@ public class RandomUtils {
      * @param hi the right endpoint (exclusive)
      * @throws IllegalArgumentException if {@code a} is {@code null}
      * @throws IllegalArgumentException unless {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
+     * 以均匀随机顺序重新排列指定子数组的元素。
+     * a  要打乱的数组
+     * lo 左端点（包含）
+     * hi 右端点（不包含）
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
+     * IllegalArgumentException 除非 {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
      */
     public static void shuffle(Random random, Object[] a, int lo, int hi) {
         validateNotNull(a);
@@ -442,6 +532,12 @@ public class RandomUtils {
      * @param hi the right endpoint (exclusive)
      * @throws IllegalArgumentException if {@code a} is {@code null}
      * @throws IllegalArgumentException unless {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
+     * 以均匀随机顺序重新排列指定子数组的元素。
+     * a  要打乱的数组
+     * lo 左端点（包含）
+     * hi 右端点（不包含）
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
+     * IllegalArgumentException 除非 {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
      */
     public static void shuffle(Random random, double[] a, int lo, int hi) {
         validateNotNull(a);
@@ -462,7 +558,13 @@ public class RandomUtils {
      * @param lo the left endpoint (inclusive)
      * @param hi the right endpoint (exclusive)
      * @throws IllegalArgumentException if {@code a} is {@code null}
-     * @throws IllegalArgumentException unless {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
+     * @throws IllegalArgumentException unless {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}以均匀随机顺序重新排列指定子数组的元素。
+     * a  要打乱的数组
+     * lo 左端点（包含）
+     * hi 右端点（不包含）
+     * IllegalArgumentException 如果 {@code a} 为 {@code null}
+     * IllegalArgumentException 除非 {@code (0 <= lo) && (lo < hi) && (hi <= a.length)}
+     *
      */
     public static void shuffle(Random random, int[] a, int lo, int hi) {
         validateNotNull(a);
@@ -483,6 +585,10 @@ public class RandomUtils {
      * @return an array of length {@code n} that is a uniformly random permutation
      * of {@code 0}, {@code 1}, ..., {@code n-1}
      * @throws IllegalArgumentException if {@code n} is negative
+     * 返回长度为 {@code n} 的均匀随机排列的数组。
+     * n 元素数量
+     * 一个长度为 {@code n} 的数组，它是 {@code 0}, {@code 1}, ..., {@code n-1} 的均匀随机排列
+     * IllegalArgumentException 如果 {@code n} 为负
      */
     public static int[] permutation(Random random, int n) {
         if (n < 0) {
@@ -505,6 +611,12 @@ public class RandomUtils {
      * of {@code k} of the elements from {@code 0}, {@code 1}, ..., {@code n-1}
      * @throws IllegalArgumentException if {@code n} is negative
      * @throws IllegalArgumentException unless {@code 0 <= k <= n}
+     * 返回长度为 {@code k} 的均匀随机排列的数组，其中包含 {@code n} 元素。
+     * n 元素数量
+     * k 要选择的元素数量
+     * 一个长度为 {@code k} 的数组，它是从 {@code 0}, {@code 1}, ..., {@code n-1} 中均匀随机排列的 {@code k} 个元素
+     * IllegalArgumentException 如果 {@code n} 为负
+     * IllegalArgumentException 除非 {@code 0 <= k <= n}
      */
     public static int[] permutation(Random random, int n, int k) {
         if (n < 0) {
