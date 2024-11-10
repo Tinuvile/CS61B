@@ -5,20 +5,29 @@ import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class MapTry {
     private static final int WIDTH = 80;
     private static final int HEIGHT = 30;
     public static final long SEED = 2873173;
     public static boolean MODE = false;
-    public static Random RANDOM;
+    public static SecureRandom RANDOM;
 
     public static final int InsideDoor = 0;
     public static final int OutsideDoorLand = 1;
     public static final int OutsideDoorWater = 2;
 
-    /* {coordinateX, coordinateY, chooseWayDirection}
+    /*
+     * coordinate direction:
+     * y
+     * |
+     * |
+     * |
+     * |------------------> x
+     */
+
+    /** {coordinateX, coordinateY, chooseWayDirection}
        chooseWayDirection:
                 0
              1     2
@@ -71,8 +80,8 @@ public class MapTry {
         int Door = 1 + RANDOM.nextInt(RoomNum + 1);
         int UnlockedDoor = 1 + RANDOM.nextInt(RoomNum + 1);
         for (int i = 1; i <= RoomNum; i++) {
-            int xNum = 4 + RANDOM.nextInt(6);    // the width of the room
-            int yNum = 3 + RANDOM.nextInt(5);    // the length of the room
+            int xNum = 4 + RANDOM.nextInt(10);   // the width of the room
+            int yNum = 3 + RANDOM.nextInt(8);    // the length of the room
             int x = 5 + RANDOM.nextInt(65);      // the coordinate x of the room
             int y = 5 + RANDOM.nextInt(15);      // the coordinate y of the room
             // build the wall
@@ -104,9 +113,9 @@ public class MapTry {
             while (WAY) {
                 if (chooseWay == 0) {
                     int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                    if (map[doorPos][y] == Tileset.WALL) {
-                        map[doorPos][y] = Tileset.FLOOR;
-                        DoorForHallways.add(new Integer[]{doorPos, y ,chooseWay});
+                    if (map[doorPos][y + yNum - 1] == Tileset.WALL) {
+                        map[doorPos][y + yNum - 1] = Tileset.FLOOR;
+                        DoorForHallways.add(new Integer[]{doorPos, y + yNum - 1 ,chooseWay});
                         WAY = false;
                     }
                 } else if (chooseWay == 1) {
@@ -125,9 +134,9 @@ public class MapTry {
                     }
                 } else {
                     int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                    if (map[doorPos][y + yNum - 1] == Tileset.WALL) {
-                        map[doorPos][y + yNum - 1] = Tileset.FLOOR;
-                        DoorForHallways.add(new Integer[]{doorPos, y + yNum - 1, chooseWay});
+                    if (map[doorPos][y] == Tileset.WALL) {
+                        map[doorPos][y] = Tileset.FLOOR;
+                        DoorForHallways.add(new Integer[]{doorPos, y, chooseWay});
                         WAY = false;
                     }
 
@@ -140,8 +149,8 @@ public class MapTry {
                     int choose = RANDOM.nextInt(4);
                     if (choose == 0) {
                         int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                        if (map[doorPos][y] != Tileset.FLOOR) {
-                            map[doorPos][y] = Tileset.LOCKED_DOOR;
+                        if (map[doorPos][y + yNum - 1] != Tileset.FLOOR) {
+                            map[doorPos][y + yNum - 1] = Tileset.LOCKED_DOOR;
                             DO = false;
                         }
                     } else if (choose == 1) {
@@ -160,11 +169,10 @@ public class MapTry {
 
                     } else {
                         int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                        if (map[doorPos][y + yNum - 1] != Tileset.FLOOR) {
-                            map[doorPos][y + yNum - 1] = Tileset.LOCKED_DOOR;
+                        if (map[doorPos][y] != Tileset.FLOOR) {
+                            map[doorPos][y] = Tileset.LOCKED_DOOR;
                             DO = false;
                         }
-
                     }
                 }
             }
@@ -173,32 +181,31 @@ public class MapTry {
                 while (DO) {
                     int choose = RANDOM.nextInt(4);
                     if (choose == 0) {
-                        int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                        if (map[doorPos][y] != Tileset.FLOOR) {
-                            map[doorPos][y] = Tileset.UNLOCKED_DOOR;
+                        int doorPos = x + 1 + RANDOM.nextInt(x + xNum - 1);
+                        if (map[doorPos][y + yNum - 1] != Tileset.FLOOR) {
+                            map[doorPos][y + yNum - 1] = Tileset.UNLOCKED_DOOR;
                             DO = false;
                         }
                     } else if (choose == 1) {
-                        int doorPos = y + 1 + RANDOM.nextInt(yNum - 2);
+                        int doorPos = y + 1 + RANDOM.nextInt(y + yNum - 1);
                         if (map[x][doorPos] != Tileset.FLOOR) {
                             map[x][doorPos] = Tileset.UNLOCKED_DOOR;
                             DO = false;
                         }
 
                     } else if (choose == 2) {
-                        int doorPos = y + 1 + RANDOM.nextInt(yNum - 2);
+                        int doorPos = y + 1 + RANDOM.nextInt(y + yNum - 1);
                         if (map[x + xNum - 1][doorPos] != Tileset.FLOOR) {
                             map[x + xNum - 1][doorPos] = Tileset.UNLOCKED_DOOR;
                             DO = false;
                         }
 
                     } else {
-                        int doorPos = x + 1 + RANDOM.nextInt(xNum - 2);
-                        if (map[doorPos][y + yNum - 1] != Tileset.FLOOR) {
-                            map[doorPos][y + yNum - 1] = Tileset.UNLOCKED_DOOR;
+                        int doorPos = x + 1 + RANDOM.nextInt(x + xNum - 1);
+                        if (map[doorPos][y] != Tileset.FLOOR) {
+                            map[doorPos][y] = Tileset.UNLOCKED_DOOR;
                             DO = false;
                         }
-
                     }
                 }
             }
@@ -217,12 +224,56 @@ public class MapTry {
             Integer[] doorPos = DoorForHallways.get(i);
         }
          */
+        // check the door's path to outside
+        for (int i = 0; i < DoorForHallways.size() - 1; i++) {
+            Integer[] door = DoorForHallways.get(i);
+            int doorX = door[0];
+            int doorY = door[1];
+            if (door[2] == 0 || door[2] == 3) {
+                map[doorX][doorY - 1] = Tileset.FLOOR;
+                map[doorX][doorY + 1] = Tileset.FLOOR;
+            }
+            else if (door[2] == 1 || door[2] == 2) {
+                map[doorX - 1][doorY] = Tileset.FLOOR;
+                map[doorX + 1][doorY] = Tileset.FLOOR;
+            }
+            else {
+                System.out.println("WARNING:NO RIGHT door[2]");
+            }
+        }
+
         // connect different doors.
+        /*
         for (int i = 0; i < DoorForHallways.size() - 1; i++) {
             Integer[] doorA = DoorForHallways.get(i);
+            if (doorA[2] == 0) {
+                doorA[1] = doorA[1] - 1;
+            }
+            else if (doorA[2] == 1) {
+                doorA[0] = doorA[0] - 1;
+            }
+            else if (doorA[2] == 2) {
+                doorA[0] = doorA[0] + 1;
+            }
+            else {
+                doorA[1] = doorA[1] + 1;
+            }
             for (int j = i + 1; j < DoorForHallways.size() - 1; j++) {
                 Integer[] doorB = DoorForHallways.get(j);
-                /* path generation: my idea is to start with the coordinates, we assume
+                // now I use the point outside the rooms so that I don't need to consider the direction restriction
+                if (doorB[2] == 0) {
+                    doorB[1] = doorB[1] - 1;
+                }
+                else if (doorB[2] == 1) {
+                    doorB[0] = doorB[0] - 1;
+                }
+                else if (doorB[2] == 2) {
+                    doorB[0] = doorB[0] + 1;
+                }
+                else {
+                    doorB[1] = doorB[1] + 1;
+                }
+                // path generation: my idea is to start with the coordinates, we assume
                   that paths to the right and down are positive, and the paths to the left
                   and up are negative. So the sum of up and down should be constant, equal
                   to delta y (the different value of the two points' vertical coordinates),
@@ -230,12 +281,63 @@ public class MapTry {
                   the complexity of the path: how many vertical and horizontal paths, also use
                   random numbers to control the length of these paths except the last one. It
                   should be calculated.
-                 */
+                 //
                 int deltaX = doorA[0] - doorB[0];
                 int deltaY = doorA[1] - doorB[1];
-                if (doorA[2] == 0) {
-                    // now I want to find two other points which can move four directions.
+                int VerNum = 1 + RANDOM.nextInt(3);
+                int HorNum = 1 + RANDOM.nextInt(5);
+                boolean IfHor = RANDOM.nextBoolean();
+                for (int k = 0; k < VerNum + HorNum; k++) {
+                    // horizontal first
+                    if (IfHor) {
+                        int moveX = 1 + RANDOM.nextInt(WIDTH - doorA[0] - 10);
+                        AddHallwayPiece(map,moveX,0,doorA[0],doorA[1]);
+                        doorA[0] = doorA[0] + moveX;
+                        IfHor = false;
+                        continue;
+                    }
+                    else {
+                        int moveY = 1 + RANDOM.nextInt(HEIGHT - doorA[1] - 5);
+                        AddHallwayPiece(map,0,moveY,doorA[0],doorA[1]);
+                        doorA[1] = doorA[1] + moveY;
+                        IfHor = true;
+                        continue;
+                    }
                 }
+                int nowX = doorA[0] - doorB[0];
+                int nowY = doorA[1] - doorB[1];
+                if (IfHor) {
+                    AddHallwayPiece(map,nowX,0,doorA[0],doorA[1]);
+                    doorA[0] = doorA[0] + nowX;
+                    AddHallwayPiece(map,0,nowY,doorA[0],doorA[1]);
+                }
+                else  {
+                    AddHallwayPiece(map,0,nowY,doorA[0],doorA[1]);
+                    doorA[1] = doorA[1] + nowY;
+                    AddHallwayPiece(map,nowX,0,doorA[0],doorA[1]);
+                }
+            }
+        }
+        */
+    }
+
+    public static void AddHallwayPiece(TETile[][] map, int deltaX, int deltaY, int x, int y) {
+        for (int m = x + 1; m <= x + deltaX; m++) {
+            map[m][y] = Tileset.FLOOR;
+            if (map[m][y - 1] == Tileset.NOTHING) {
+                map[m][y - 1] = Tileset.WALL;
+            }
+            if (map[m][y + 1] == Tileset.NOTHING) {
+                map[m][y + 1] = Tileset.WALL;
+            }
+        }
+        for (int n = y + 1; n <= y + deltaY; n++) {
+            map[x][n] = Tileset.FLOOR;
+            if (map[x - 1][n] == Tileset.NOTHING) {
+                map[x - 1][n] = Tileset.WALL;
+            }
+            if (map[x + 1][n] == Tileset.NOTHING) {
+                map[x + 1][n] = Tileset.WALL;
             }
         }
     }
@@ -250,10 +352,11 @@ public class MapTry {
         ter.initialize(WIDTH, HEIGHT);
 
         if (MODE) {
-            RANDOM = new Random(SEED);
+            RANDOM = new SecureRandom();
+            RANDOM.setSeed(SEED); // 设置固定种子
         } else {
-            long seed = System.currentTimeMillis();
-            RANDOM = new Random(seed);
+            RANDOM = new SecureRandom();
+            RANDOM.setSeed(System.currentTimeMillis()); // 使用当前时间戳作为种子
         }
 
         TETile[][] MapTryTiles = new TETile[WIDTH][HEIGHT];
