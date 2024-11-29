@@ -58,7 +58,9 @@ public class PercolationStats {
     }
 
     // 测试 PercolationStats 数据类型（本示例中未实现）
+    /*
     public static void main(String[] args) {
         // 这里可以添加测试代码
     }
+     */
 }
