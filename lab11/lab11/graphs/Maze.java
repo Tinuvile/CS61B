@@ -14,6 +14,11 @@ import java.util.regex.Pattern;
 
 public class Maze implements Observer {
 
+    /**
+     * SINGLE_GAP 单一缺口
+     * POPEN_SOLVABLE 可解的开放型迷宫
+     * BLANK 空迷宫
+     */
     public enum MazeType {
         SINGLE_GAP, POPEN_SOLVABLE, BLANK
     }

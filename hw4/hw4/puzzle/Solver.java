@@ -8,6 +8,30 @@ public class Solver {
     private final int moves; //从初始状态到目标状态所需最小步骤数
     private final Iterable<WorldState> solution; //保存从初始状态到目标状态的WorldState序列，表示解决方案路径
 
+    // 内部类，表示搜索状态的节点
+    private class SearchNode implements Comparable<SearchNode> {
+        private final WorldState state;
+        private final int moves;
+        private final int priority;  // f(n) = g(n) + h(n)
+        private final SearchNode parent;  // 指向父节点的引用
+
+        public SearchNode(WorldState state, int moves, int priority, SearchNode parent) {
+            this.state = state;
+            this.moves = moves;
+            this.priority = priority; // 优先级
+            this.parent = parent;
+        }
+
+        @Override
+        public int compareTo(SearchNode other) {
+            // 如果优先级相同，可能可以根据移动次数进行次要比较
+            if (this.priority != other.priority) {
+                return Integer.compare(this.priority, other.priority);
+            }
+            return Integer.compare(this.moves, other.moves); // 或根据其他条件。如果需要。
+        }
+    }
+
     /**
      * Constructor which solves the puzzle, computing everything
      * necessary for moves() and solution() to not have to solve
@@ -84,29 +108,5 @@ public class Solver {
         }
         Collections.reverse(path);  // 反转路径以确保从起始到目标状态
         return path;
-    }
-
-    // 内部类，表示搜索状态的节点
-    private class SearchNode implements Comparable<SearchNode> {
-        private final WorldState state;
-        private final int moves;
-        private final int priority;  // f(n) = g(n) + h(n)
-        private final SearchNode parent;  // 指向父节点的引用
-
-        public SearchNode(WorldState state, int moves, int priority, SearchNode parent) {
-            this.state = state;
-            this.moves = moves;
-            this.priority = priority; // 优先级
-            this.parent = parent;
-        }
-
-        @Override
-        public int compareTo(SearchNode other) {
-            // 如果优先级相同，可能可以根据移动次数进行次要比较
-            if (this.priority != other.priority) {
-                return Integer.compare(this.priority, other.priority);
-            }
-            return Integer.compare(this.moves, other.moves); // 或根据其他条件。如果需要。
-        }
     }
 }
