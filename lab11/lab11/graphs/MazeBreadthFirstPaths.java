@@ -5,6 +5,7 @@ import java.util.Queue;
 
 /**
  *  @author Josh Hug
+ *  @author Zhuhe Zhang
  */
 public class MazeBreadthFirstPaths extends MazeExplorer {
     /* Inherits public fields:
