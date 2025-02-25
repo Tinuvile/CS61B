@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.Stack;
 
 /**
  *  @author Josh Hug
+ *  @author Zhuhe Zhang
  */
 public class MazeCycles extends MazeExplorer {
     /* Inherits public fields:
