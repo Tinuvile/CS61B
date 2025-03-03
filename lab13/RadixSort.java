@@ -1,7 +1,10 @@
+import java.util.Arrays;
+
 /**
  * Class for doing Radix sort
  *
  * @author Akhil Batra, Alexander Hwang
+ * @author Zhuhe Zhang
  *
  */
 public class RadixSort {
@@ -16,8 +19,20 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
-        return null;
+        String[] sorted = Arrays.copyOf(asciis, asciis.length);
+
+        int maxLen = 0;
+        for (String s : sorted) {
+            if (s.length() > maxLen) {
+                maxLen = s.length();
+            }
+        }
+
+        for (int i = maxLen; i >= 0; i--) {
+            sortHelperLSD(sorted, i);
+        }
+
+        return sorted;
     }
 
     /**
@@ -28,7 +43,27 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        final int RANGE = 256;
+        int[] counts = new int[RANGE + 1];
+
+        for (String s : asciis) {
+            int c = (index < s.length()) ? s.charAt(index) : 0;
+            counts[c + 1]++;
+        }
+
+        for (int i = 1; i < counts.length; i++) {
+            counts[i] += counts[i - 1];
+        }
+
+        String[] temp = new String[asciis.length];
+        for (int i = asciis.length - 1; i >= 0; i--) {
+            String s = asciis[i];
+            int c = (index < s.length()) ? s.charAt(index) : 0;
+            temp[counts[c]] = s;
+            counts[c]++;
+        }
+
+        System.arraycopy(temp, 0, asciis, 0, asciis.length);
     }
 
     /**

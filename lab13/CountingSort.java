@@ -1,7 +1,10 @@
+import java.util.Arrays;
+
 /**
  * Class with 2 ways of doing Counting sort, one naive way and one "better" way
  *
  * @author Akhil Batra, Alexander Hwang
+ * @author Zhuhe Zhang
  *
  **/
 public class CountingSort {
@@ -66,7 +69,44 @@ public class CountingSort {
      * @param arr int array that will be sorted
      */
     public static int[] betterCountingSort(int[] arr) {
-        // TODO make counting sort work with arrays containing negative numbers.
-        return null;
+        if (arr == null || arr.length == 0) {
+            return new int[0];
+        }
+
+        // 1. 创建保护性副本
+        int[] workArr = Arrays.copyOf(arr, arr.length);
+
+        // 2. 计算数值范围
+        int min = workArr[0];
+        int max = workArr[0];
+        for (int num : workArr) {
+            if (num < min) min = num;
+            if (num > max) max = num;
+        }
+
+        // 3. 初始化计数数组
+        int range = max - min + 1;
+        int[] counts = new int[range];
+
+        // 4. 统计元素出现次数
+        for (int num : workArr) {
+            counts[num - min]++;
+        }
+
+        // 5. 计算累计位置（稳定排序关键）
+        for (int i = 1; i < counts.length; i++) {
+            counts[i] += counts[i - 1];
+        }
+
+        // 6. 生成排序结果
+        int[] sorted = new int[workArr.length];
+        for (int i = workArr.length - 1; i >= 0; i--) {
+            int num = workArr[i];
+            int pos = counts[num - min] - 1;
+            sorted[pos] = num;
+            counts[num - min]--;
+        }
+
+        return sorted;
     }
 }
